@@ -71,6 +71,7 @@ public class BasicUserService implements UserService {
         User user = findByEmail(email);
         if(user != null) {
             user.setPassword(hashPassword(password));
+            user.setUpdatedAt(String.valueOf(LocalDateTime.now()));
             repository.save(user);
         }else{
             throw new Exception("User not found");

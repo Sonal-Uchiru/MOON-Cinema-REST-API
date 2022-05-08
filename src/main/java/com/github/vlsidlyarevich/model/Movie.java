@@ -1,6 +1,9 @@
 package com.github.vlsidlyarevich.model;
 
+import javax.validation.constraints.NotNull;
+
 public class Movie extends BaseEntity{
+
     private String name;
     private String image;
     private String duration;
