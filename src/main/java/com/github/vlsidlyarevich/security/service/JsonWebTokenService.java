@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,11 +35,13 @@ public class JsonWebTokenService implements TokenService {
     @Override
     public String getToken(final String username, final String password) {
         if (username == null || password == null) {
-            return null;
+            throw new ServiceException("Invalid Credentials", this.getClass().getName());
         }
         final User user = (User) userDetailsService.loadUserByUsername(username);
         Map<String, Object> tokenData = new HashMap<>();
-        if (password.equals(user.getPassword())) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (passwordEncoder.matches(password,user.getPassword())) {
             tokenData.put("userID", user.getId());
             tokenData.put("username", user.getUsername());
             tokenData.put("token_create_date", LocalDateTime.now());
@@ -51,7 +54,7 @@ public class JsonWebTokenService implements TokenService {
             return jwtBuilder.signWith(SignatureAlgorithm.HS512, tokenKey).compact();
 
         } else {
-            throw new ServiceException("Authentication error", this.getClass().getName());
+            throw new ServiceException("Invalid Credentials", this.getClass().getName());
         }
     }
 

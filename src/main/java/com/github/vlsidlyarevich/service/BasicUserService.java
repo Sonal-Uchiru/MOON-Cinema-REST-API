@@ -3,8 +3,11 @@ package com.github.vlsidlyarevich.service;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,9 +23,16 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public User create(final User user) {
-        user.setCreatedAt(String.valueOf(LocalDateTime.now()));
-        return repository.save(user);
+    public User create(final User user) throws Exception {
+        final User dbUser  = this.findByUsername(user.getUsername());
+        if(dbUser == null){
+            user.setPassword(hashPassword(user.getPassword()));
+            user.setCreatedAt(String.valueOf(LocalDateTime.now()));
+            return repository.save(user);
+        }else{
+            throw new Exception("Conflict Exception");
+        }
+
     }
 
     @Override
@@ -57,8 +67,32 @@ public class BasicUserService implements UserService {
     }
 
     @Override
+    public void updatePassword(String email, String password) throws Exception {
+        User user = findByEmail(email);
+        if(user != null) {
+            user.setPassword(hashPassword(password));
+            repository.save(user);
+        }else{
+            throw new Exception("User not found");
+        }
+
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
     public String delete(final String id) {
         repository.delete(id);
         return id;
+    }
+
+    public String hashPassword(final String password) {
+        int strength = 10; // work factor of bcrypt
+        BCryptPasswordEncoder bCryptPasswordEncoder =
+                new BCryptPasswordEncoder(strength, new SecureRandom());
+        return bCryptPasswordEncoder.encode(password);
     }
 }

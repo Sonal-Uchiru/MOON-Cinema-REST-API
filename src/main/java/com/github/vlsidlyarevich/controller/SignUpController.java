@@ -19,17 +19,19 @@ public class SignUpController {
 
     private final UserService service;
 
-    private final ConverterFacade converterFacade;
 
     @Autowired
-    public SignUpController(final UserService service,
-                            final ConverterFacade converterFacade) {
+    public SignUpController(final UserService service) {
         this.service = service;
-        this.converterFacade = converterFacade;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> signUp(@RequestBody final User dto) {
-        return new ResponseEntity<>(service.create(dto), HttpStatus.OK);
+    public ResponseEntity<?> signUp(@RequestBody final User userBody) throws Exception {
+            User user = service.create(userBody);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+
+
+
+
     }
 }
