@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 public class User extends BaseEntity implements UserDetails {
 
     private static final long serialVersionUID = 7954325925563724664L;
