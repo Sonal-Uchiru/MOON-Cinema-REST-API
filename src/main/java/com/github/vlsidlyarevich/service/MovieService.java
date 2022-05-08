@@ -3,6 +3,7 @@ package com.github.vlsidlyarevich.service;
 import com.github.vlsidlyarevich.model.Movie;
 import com.github.vlsidlyarevich.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,5 +25,15 @@ public class MovieService {
 
     public List<Movie> getMovies(){
         return  this.repository.findAll();
+    }
+
+    public Movie getMovie(String movieId) throws Exception {
+        Movie movie = this.repository.findOne(movieId);
+        if(movie != null){
+            return this.repository.findOne(movieId);
+        }else{
+            throw new Exception("Movie Not found");
+        }
+
     }
 }

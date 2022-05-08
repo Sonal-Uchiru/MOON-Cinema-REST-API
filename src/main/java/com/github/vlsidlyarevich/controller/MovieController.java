@@ -31,5 +31,10 @@ public class MovieController {
         return this.movieService.getMovies();
     }
 
+    @GetMapping("/{id}")
+    public Movie getMovie(@PathVariable String id) throws Exception {
+        return this.movieService.getMovie(id);
+    }
+
 }
 
