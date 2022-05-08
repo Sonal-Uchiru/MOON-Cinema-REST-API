@@ -21,6 +21,16 @@ public class User extends BaseEntity implements UserDetails {
     private String gender;
     private String nic;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    private String role;
+
     public String getFirstName() {
         return firstName;
     }
