@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class MovieService {
@@ -19,5 +20,9 @@ public class MovieService {
     public Movie save(Movie movie) {
             movie.setCreatedAt(String.valueOf(LocalDateTime.now()));
             return this.repository.save(movie);
+    }
+
+    public List<Movie> getMovies(){
+        return  this.repository.findAll();
     }
 }
