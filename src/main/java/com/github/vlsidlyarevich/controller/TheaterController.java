@@ -5,6 +5,7 @@ import com.github.vlsidlyarevich.service.TheaterService;
 import com.github.vlsidlyarevich.service.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,11 @@ public class TheaterController {
     @GetMapping()
     public List<Theater> getTheaters() {
         return this.theaterService.getTheaters();
+    }
+
+    @GetMapping("/{id}")
+    public Theater getTheater(@PathVariable String id) throws Exception {
+        return this.theaterService.getTheater(id);
     }
 
 }

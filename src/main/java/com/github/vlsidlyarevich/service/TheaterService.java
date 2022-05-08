@@ -21,4 +21,13 @@ public class TheaterService {
         return repository.findAll();
     }
 
+    public Theater getTheater(String theaterId) throws Exception {
+        Theater theater = this.repository.findOne(theaterId);
+        if(theater != null){
+            return theater;
+        }else{
+            throw new Exception("Theater Not Found");
+        }
+    }
+
 }
