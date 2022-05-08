@@ -72,7 +72,7 @@ public class Movie extends BaseEntity{
         this.imdb_key = imdb_key;
     }
 
-    public boolean isShowing() {
+    public boolean getShowing() {
         return isShowing;
     }
 

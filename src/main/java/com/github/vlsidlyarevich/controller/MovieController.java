@@ -36,5 +36,15 @@ public class MovieController {
         return this.movieService.getMovie(id);
     }
 
+    @PutMapping("/{id}")
+    public void updateMovie(@PathVariable String id,@RequestBody Movie movie) throws Exception {
+        this.movieService.updateMovie(id,movie);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMovie(@PathVariable String id) throws Exception {
+        this.movieService.deleteMovie(id);
+    }
+
 }
 

@@ -36,4 +36,29 @@ public class MovieService {
         }
 
     }
+
+    public void updateMovie(String movieId,Movie movie) throws Exception {
+        Movie movieDB = getMovie(movieId);
+        if(movieDB != null) {
+            movieDB.setUpdatedAt(String.valueOf(LocalDateTime.now()));
+            movieDB.setName(movie.getName());
+            movieDB.setImage(movie.getImage());
+            movieDB.setDuration(movie.getDuration());
+            movieDB.setGenre(movie.getGenre());
+            movieDB.setStory_line(movie.getStory_line());
+            movieDB.setLanguage(movie.getLanguage());
+            movieDB.setImdb_key(movie.getImdb_key());
+            movie.setShowing(movie.getShowing());
+            this.repository.save(movieDB);
+        }else{
+            throw new Exception("Movie Not Found");
+        }
+
+    }
+
+
+    public void deleteMovie(String movieId) throws Exception {
+        this.getMovie(movieId);
+        this.repository.delete(movieId);
+    }
 }
