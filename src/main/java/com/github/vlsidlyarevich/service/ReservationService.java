@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.service;
 
+import com.github.vlsidlyarevich.dto.ReservationTicketDetailsDTO;
 import com.github.vlsidlyarevich.model.Reservation;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.ReservationRepository;
@@ -12,10 +13,12 @@ import java.util.*;
 @Service
 public class ReservationService {
     private final ReservationRepository repository;
+    private final ShowTimeService showTimeService;
 
     @Autowired
-    public ReservationService(ReservationRepository repository) {
+    public ReservationService(ReservationRepository repository,ShowTimeService showTimeService) {
         this.repository = repository;
+        this.showTimeService = showTimeService;
     }
 
     public Reservation saveReservation(Reservation reservation, User user){
@@ -41,13 +44,15 @@ public class ReservationService {
         }
     }
 
-    public List<Reservation> getReservations(User user){
+    public List<ReservationTicketDetailsDTO> getReservations(User user) throws Exception {
         List<Reservation> reservation = this.repository.findAll();
-        List<Reservation> userReservations = new ArrayList<>();
-        System.out.println(user.getId());
+        List<ReservationTicketDetailsDTO> userReservations = new ArrayList<>();
         for (Reservation value : reservation) {
             if (value.getCustomer_id().equals(user.getId())  && value.getStatus() == 0) {
-                userReservations.add(value);
+                ReservationTicketDetailsDTO userReservation = new ReservationTicketDetailsDTO();
+                userReservation.setReservation(value);
+                userReservation.setShowTimeWithMovieTheaterDetailsDto(this.showTimeService.getShowTimesWithMoviesAndTheaterDetailsById(value.getShow_time_id()));
+                userReservations.add(userReservation);
             }
         }
 

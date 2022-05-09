@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.controller;
 
+import com.github.vlsidlyarevich.dto.ReservationTicketDetailsDTO;
 import com.github.vlsidlyarevich.model.Reservation;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.service.ReservationService;
@@ -23,7 +24,7 @@ public class ReservationController {
     }
 
     @GetMapping()
-    public List<Reservation> getUserReservations(@RequestHeader (name = "x-auth-token") String jwtToken){
+    public List<ReservationTicketDetailsDTO> getUserReservations(@RequestHeader (name = "x-auth-token") String jwtToken) throws Exception {
         User user = this.tokenInterceptor.getUserByToken(jwtToken);
         return this.reservationService.getReservations(user);
     }
