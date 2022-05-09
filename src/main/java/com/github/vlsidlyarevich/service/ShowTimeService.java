@@ -1,6 +1,7 @@
 package com.github.vlsidlyarevich.service;
 
 import com.github.vlsidlyarevich.dto.ShowTimeWithMovieDetailsDTO;
+import com.github.vlsidlyarevich.dto.ShowTimeWithMovieTheaterDetailsDTO;
 import com.github.vlsidlyarevich.model.ShowTime;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.ShowTimeRepository;
@@ -15,10 +16,12 @@ import java.util.List;
 public class ShowTimeService {
     private final ShowTimeRepository repository;
     private final MovieService movieService;
+    private final TheaterService theaterService;
     @Autowired
-    public ShowTimeService(ShowTimeRepository showTimeRepository,MovieService movieService) {
+    public ShowTimeService(ShowTimeRepository showTimeRepository,MovieService movieService,TheaterService theaterService) {
         this.repository = showTimeRepository;
         this.movieService = movieService;
+        this.theaterService = theaterService;
     }
 
     public ShowTime saveShowTime(ShowTime showTime, User user) {
@@ -66,7 +69,7 @@ public class ShowTimeService {
         }
     }
 
-    public List<ShowTimeWithMovieDetailsDTO> getShowTimesWithMovies(String theaterId) throws Exception {
+    public List<ShowTimeWithMovieDetailsDTO> getShowTimesWithMoviesByTheaterId(String theaterId) throws Exception {
         List<ShowTime> ShowTimes = this.repository.findAll();
         List<ShowTimeWithMovieDetailsDTO> showTimeWithMovieDetails = new ArrayList<>();
         if(ShowTimes.size() > 0){
@@ -82,6 +85,15 @@ public class ShowTimeService {
         }
 
         return showTimeWithMovieDetails;
+    }
+
+    public ShowTimeWithMovieTheaterDetailsDTO getShowTimesWithMoviesAndTheaterDetailsById(String showTimeId) throws Exception {
+        ShowTime showTime = this.getShowTimeById(showTimeId);
+        ShowTimeWithMovieTheaterDetailsDTO showTimeWithMovieTheaterDetailsDTO = new ShowTimeWithMovieTheaterDetailsDTO();
+        showTimeWithMovieTheaterDetailsDTO.setShowTime(showTime);
+        showTimeWithMovieTheaterDetailsDTO.setMovie(this.movieService.getMovie(showTime.getMovie_id()));
+        showTimeWithMovieTheaterDetailsDTO.setTheater(this.theaterService.getTheater(showTime.getTheater_id()));
+        return showTimeWithMovieTheaterDetailsDTO;
     }
 
 }

@@ -36,7 +36,7 @@ public class ShowTimeController {
 
     @GetMapping("theaters/{id}")
     public List<ShowTimeWithMovieDetailsDTO> getShowTimesWithMovies(@PathVariable String id) throws Exception {
-        return this.showTimeService.getShowTimesWithMovies(id);
+        return this.showTimeService.getShowTimesWithMoviesByTheaterId(id);
     }
 
     @PatchMapping("{id}/status")
