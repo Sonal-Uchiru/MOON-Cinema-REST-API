@@ -5,8 +5,8 @@ import java.util.Date;
 public class Reservation extends BaseEntity{
     private String customer_id;
     private String show_time_id;
-    private Date reserved_date;
-    private Date reserved_on;
+    private String reserved_date;
+    private String reserved_on;
     private int child_tickets;
     private int adult_tickets;
     private int status;
@@ -30,19 +30,19 @@ public class Reservation extends BaseEntity{
         this.show_time_id = show_time_id;
     }
 
-    public Date getReserved_date() {
+    public String getReserved_date() {
         return reserved_date;
     }
 
-    public void setReserved_date(Date reserved_date) {
+    public void setReserved_date(String reserved_date) {
         this.reserved_date = reserved_date;
     }
 
-    public Date getReserved_on() {
+    public String getReserved_on() {
         return reserved_on;
     }
 
-    public void setReserved_on(Date reserved_on) {
+    public void setReserved_on(String reserved_on) {
         this.reserved_on = reserved_on;
     }
 
