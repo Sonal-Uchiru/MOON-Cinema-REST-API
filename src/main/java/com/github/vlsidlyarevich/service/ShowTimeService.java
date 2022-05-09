@@ -1,5 +1,6 @@
 package com.github.vlsidlyarevich.service;
 
+import com.github.vlsidlyarevich.dto.ShowTimeWithMovieDetailsDTO;
 import com.github.vlsidlyarevich.model.ShowTime;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.ShowTimeRepository;
@@ -7,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ShowTimeService {
     private final ShowTimeRepository repository;
-
+    private final MovieService movieService;
     @Autowired
-    public ShowTimeService(ShowTimeRepository showTimeRepository) {
+    public ShowTimeService(ShowTimeRepository showTimeRepository,MovieService movieService) {
         this.repository = showTimeRepository;
+        this.movieService = movieService;
     }
 
     public ShowTime saveShowTime(ShowTime showTime, User user) {
@@ -51,6 +55,8 @@ public class ShowTimeService {
         this.repository.save(showTime);
     }
 
+
+
     public ShowTime getShowTimeById(String ShowTimeId) throws Exception {
         ShowTime showTime = this.repository.findOne(ShowTimeId);
         if(showTime != null){
@@ -58,6 +64,24 @@ public class ShowTimeService {
         }else{
             throw new Exception("Show Time Not Found");
         }
+    }
+
+    public List<ShowTimeWithMovieDetailsDTO> getShowTimesWithMovies(String theaterId) throws Exception {
+        List<ShowTime> ShowTimes = this.repository.findAll();
+        List<ShowTimeWithMovieDetailsDTO> showTimeWithMovieDetails = new ArrayList<>();
+        if(ShowTimes.size() > 0){
+            for(ShowTime value : ShowTimes){
+                if(value.getTheater_id().equals(theaterId)){
+                    ShowTimeWithMovieDetailsDTO newShowTimeWithMovieDetails = new ShowTimeWithMovieDetailsDTO();
+                    newShowTimeWithMovieDetails.setShowTime(value);
+                    newShowTimeWithMovieDetails.setMovie(this.movieService.getMovie(value.getMovie_id()));
+                    showTimeWithMovieDetails.add(newShowTimeWithMovieDetails);
+                }
+
+            }
+        }
+
+        return showTimeWithMovieDetails;
     }
 
 }
