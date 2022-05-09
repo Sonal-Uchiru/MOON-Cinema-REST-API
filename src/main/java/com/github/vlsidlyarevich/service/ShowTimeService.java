@@ -29,6 +29,16 @@ public class ShowTimeService {
         this.repository.delete(showTimeId);
     }
 
+    public void updateShowTime(String showTimeId,ShowTime showTime,User user) throws Exception {
+        ShowTime showTimeDB = this.getShowTimeById(showTimeId);
+        showTimeDB.setTheater_id(showTime.getTheater_id());
+        showTimeDB.setShow_time(showTime.getShow_time());
+        showTimeDB.setMovie_id(showTime.getMovie_id());
+        showTime.setUpdatedAt(String.valueOf(LocalDateTime.now()));
+        showTime.setModified_user(user.getId());
+        this.repository.save(showTimeDB);
+    }
+
     public void updateShowTimeStatus(String showTimeId, User user) throws Exception {
         ShowTime showTime = this.getShowTimeById(showTimeId);
         if(showTime.getStatus() == 1){
@@ -38,6 +48,7 @@ public class ShowTimeService {
         }
         showTime.setModified_user(user.getId());
         showTime.setUpdatedAt(String.valueOf(LocalDateTime.now()));
+        this.repository.save(showTime);
     }
 
     public ShowTime getShowTimeById(String ShowTimeId) throws Exception {
