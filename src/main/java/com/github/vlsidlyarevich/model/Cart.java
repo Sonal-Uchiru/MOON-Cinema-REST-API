@@ -1,17 +1,12 @@
 package com.github.vlsidlyarevich.model;
 
-
-
-public class Reservation extends BaseEntity{
+public class Cart extends BaseEntity{
     private String customer_id;
     private String show_time_id;
-    private String reserved_date;
-    private String reserved_on;
     private int child_tickets;
     private int adult_tickets;
-    private int status;
 
-    public Reservation() {
+    public Cart() {
     }
 
     public String getCustomer_id() {
@@ -30,22 +25,6 @@ public class Reservation extends BaseEntity{
         this.show_time_id = show_time_id;
     }
 
-    public String getReserved_date() {
-        return reserved_date;
-    }
-
-    public void setReserved_date(String reserved_date) {
-        this.reserved_date = reserved_date;
-    }
-
-    public String getReserved_on() {
-        return reserved_on;
-    }
-
-    public void setReserved_on(String reserved_on) {
-        this.reserved_on = reserved_on;
-    }
-
     public int getChild_tickets() {
         return child_tickets;
     }
@@ -60,13 +39,5 @@ public class Reservation extends BaseEntity{
 
     public void setAdult_tickets(int adult_tickets) {
         this.adult_tickets = adult_tickets;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 }
