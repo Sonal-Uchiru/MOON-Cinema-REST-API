@@ -23,5 +23,30 @@ public class CartService {
         return this.repository.save(cart);
     }
 
+    public void removeCartTicket(String cartId) throws Exception {
+        getCartById(cartId);
+        this.repository.delete(cartId);
+    }
+
+    public Cart getCartById(String cartId) throws Exception {
+        Cart cart = this.repository.findOne(cartId);
+        if(cart != null){
+            return cart;
+        }else{
+            throw new Exception("Cart Ticket Not Found");
+        }
+    }
+
+    public void updateTicketCount(String id, boolean isChild, int tickets) throws Exception {
+        Cart cart = this.getCartById(id);
+        if(isChild){
+            cart.setChild_tickets(tickets);
+        }else{
+            cart.setAdult_tickets(tickets);
+        }
+        cart.setUpdatedAt(String.valueOf(LocalDateTime.now()));
+        this.repository.save(cart);
+    }
+
 
 }
