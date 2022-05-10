@@ -4,13 +4,10 @@ import com.github.vlsidlyarevich.model.Theater;
 import com.github.vlsidlyarevich.service.TheaterService;
 import com.github.vlsidlyarevich.service.TokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController()
 @RequestMapping("/api/theaters")
 public class TheaterController {

@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.model.UserAuthentication;
@@ -20,7 +17,7 @@ import com.github.vlsidlyarevich.service.TokenInterceptor;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/hello")
 public class SecuredController {

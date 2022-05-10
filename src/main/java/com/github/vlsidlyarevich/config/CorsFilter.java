@@ -34,16 +34,9 @@ public class CorsFilter implements Filter {
 
         final HttpServletRequest request = (HttpServletRequest) req;
 
-        if (request.getMethod().equals("OPTIONS")) {
-            try {
-                response.getWriter().print("OK");
-                response.getWriter().flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
+
             chain.doFilter(request, response);
-        }
+
     }
 
     @Override
