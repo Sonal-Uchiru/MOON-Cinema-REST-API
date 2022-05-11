@@ -23,17 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/auth").permitAll()
-                .antMatchers("/api/signup").permitAll()
-                .antMatchers("/api/users").permitAll()
-                .antMatchers("/api/carts").permitAll()
-                .antMatchers("/api/movies").permitAll()
-                .antMatchers("/api/reservations").permitAll()
-                .antMatchers("/api/showtimes").permitAll()
-                .antMatchers("/api/theaters").permitAll()
-                .antMatchers("/api/hello").permitAll()
-                .anyRequest().authenticated()
+        http.authorizeRequests().
+                anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class)

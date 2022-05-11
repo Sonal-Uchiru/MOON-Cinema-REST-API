@@ -24,8 +24,9 @@ public class BasicUserService implements UserService {
 
     @Override
     public User create(final User user) throws Exception {
-        final User dbUser  = this.findByUsername(user.getUsername());
-        if(dbUser == null){
+        final User dbUserByUsername  = this.findByUsername(user.getUsername());
+        final User dbUserByEmail = this.findByEmail(user.getEmail());
+        if(dbUserByUsername == null && dbUserByEmail == null){
             user.setPassword(hashPassword(user.getPassword()));
             user.setCreatedAt(String.valueOf(LocalDateTime.now()));
             return repository.save(user);
