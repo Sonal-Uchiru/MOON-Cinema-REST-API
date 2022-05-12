@@ -30,4 +30,9 @@ public class UserController {
     public User getUser(@RequestHeader (name = "x-auth-token") String jwtToken ) throws Exception {
         return this.tokenInterceptor.getUserByToken(jwtToken);
     }
+    
+    @GetMapping("/{email}/email")
+    public User getUserByEmail(@PathVariable String email) {
+    	return this.userService.findByEmail(email);
+    }
 }

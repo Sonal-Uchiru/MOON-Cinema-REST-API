@@ -23,8 +23,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests().
-                anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/api/auth").permitAll()
+                .antMatchers("/api/signup").permitAll()
+                .antMatchers("/api/users").permitAll()
+                .antMatchers("/api/users/{email}/password").permitAll()
+                .antMatchers("/api/users/{email}/email").permitAll()
+                .antMatchers("/api/carts").permitAll()
+                .antMatchers("/api/carts/{id}").permitAll()
+                .antMatchers("/api/carts/{id}/ticket").permitAll()
+                .antMatchers("/api/movies").permitAll()
+                .antMatchers("/api/movies/{id}").permitAll()
+                .antMatchers("/api/reservations").permitAll()
+                .antMatchers("/api/reservations/{id}/status").permitAll()
+                .antMatchers("/api/showtimes").permitAll()
+                .antMatchers("/api/showtimes/{id}").permitAll()
+                .antMatchers("/api/showtimes/theaters/{id}").permitAll()
+                .antMatchers("/api/showtimes/{id}/status").permitAll()
+                .antMatchers("/api/theaters").permitAll()
+                .antMatchers("/api/theaters/{id}").permitAll()
+                .antMatchers("/api/hello").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class)
