@@ -18,11 +18,18 @@ public class UserDTO implements Serializable {
     private String nic;
     private String mobilePhoneNumber;
     private String address;
-
+    private String role;
+    
     public UserDTO() {
     }
 
-
+    public String getRole() {
+    	return role;
+    }
+    
+    public void setRole(String role) {
+    	this.role = role; 
+    }
     public String getFirstName() {
         return firstName;
     }

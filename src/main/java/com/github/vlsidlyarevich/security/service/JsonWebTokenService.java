@@ -35,7 +35,8 @@ public class JsonWebTokenService implements TokenService {
     @Override
     public String getToken(final String username, final String password) {
         if (username == null || password == null) {
-            throw new ServiceException("Invalid Credentials", this.getClass().getName());
+           // throw new ServiceException("Invalid Credentials", this.getClass().getName());
+        	return null;
         }
         final User user = (User) userDetailsService.loadUserByUsername(username);
         Map<String, Object> tokenData = new HashMap<>();
@@ -54,7 +55,9 @@ public class JsonWebTokenService implements TokenService {
             return jwtBuilder.signWith(SignatureAlgorithm.HS512, tokenKey).compact();
 
         } else {
-            throw new ServiceException("Invalid Credentials", this.getClass().getName());
+           // throw new ServiceException("Invalid Credentials", this.getClass().getName());
+        	return null;
+        	
         }
     }
 

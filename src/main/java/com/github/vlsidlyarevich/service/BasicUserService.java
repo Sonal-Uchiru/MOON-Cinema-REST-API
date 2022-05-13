@@ -29,6 +29,7 @@ public class BasicUserService implements UserService {
         if(dbUserByUsername == null && dbUserByEmail == null){
             user.setPassword(hashPassword(user.getPassword()));
             user.setCreatedAt(String.valueOf(LocalDateTime.now()));
+            user.setRole("user");
             return repository.save(user);
         }else{
             throw new Exception("Conflict Exception");
