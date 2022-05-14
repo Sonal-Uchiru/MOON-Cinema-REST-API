@@ -105,7 +105,7 @@ public class ShowTimeService {
                 if(value.getMovie_id().equals(movieId)){
 
                     ShowTimesWithTheaterDetailsDTO showTimeWithTheaterDetailsDTO = new ShowTimesWithTheaterDetailsDTO();
-                    showTimeWithTheaterDetailsDTO.setShowTimes(this.getAllShowTimes(value.getTheater_id()));
+                    showTimeWithTheaterDetailsDTO.setShowTimes(this.getAllShowTimes(value.getTheater_id(),value.getMovie_id()));
                     showTimeWithTheaterDetailsDTO.setTheater(this.theaterService.getTheater(value.getTheater_id()));
                     showTimesWithTheaterDetailsList.add(showTimeWithTheaterDetailsDTO);
 
@@ -121,11 +121,11 @@ public class ShowTimeService {
         return showTimesWithTheaterDetailsList;
     }
 
-    public List<ShowTime> getAllShowTimes(String theaterId){
+    public List<ShowTime> getAllShowTimes(String theaterId,String movieId){
         List<ShowTime> showTimes = this.repository.findAll();
         List<ShowTime> selectedShowTimes = new ArrayList<>();
         for(ShowTime value : showTimes){
-            if(value.getTheater_id().equals(theaterId)){
+            if(value.getTheater_id().equals(theaterId) && value.getMovie_id().equals(movieId)){
                 selectedShowTimes.add(value);
             }
         }
