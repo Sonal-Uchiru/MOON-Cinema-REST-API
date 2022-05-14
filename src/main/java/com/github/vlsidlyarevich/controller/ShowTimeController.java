@@ -2,6 +2,7 @@ package com.github.vlsidlyarevich.controller;
 
 import com.github.vlsidlyarevich.dto.ShowTimeWithMovieDetailsDTO;
 import com.github.vlsidlyarevich.dto.ShowTimeWithMovieTheaterDetailsDTO;
+import com.github.vlsidlyarevich.dto.ShowTimesWithTheaterDetailsDTO;
 import com.github.vlsidlyarevich.model.ShowTime;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.service.ShowTimeService;
@@ -41,7 +42,7 @@ public class ShowTimeController {
     }
 
     @GetMapping("movies/{id}")
-    public List<ShowTimeWithMovieTheaterDetailsDTO> getShowTimesWithTheaters(@PathVariable String id) throws Exception {
+    public List<ShowTimesWithTheaterDetailsDTO> getShowTimesWithTheaters(@PathVariable String id) throws Exception {
         return this.showTimeService.getShowTimesWithMoviesAndTheaterDetailsByMovieId(id);
     }
 

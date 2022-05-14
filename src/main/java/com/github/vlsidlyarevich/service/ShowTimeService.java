@@ -2,6 +2,7 @@ package com.github.vlsidlyarevich.service;
 
 import com.github.vlsidlyarevich.dto.ShowTimeWithMovieDetailsDTO;
 import com.github.vlsidlyarevich.dto.ShowTimeWithMovieTheaterDetailsDTO;
+import com.github.vlsidlyarevich.dto.ShowTimesWithTheaterDetailsDTO;
 import com.github.vlsidlyarevich.model.ShowTime;
 import com.github.vlsidlyarevich.model.User;
 import com.github.vlsidlyarevich.repository.ShowTimeRepository;
@@ -96,23 +97,38 @@ public class ShowTimeService {
         return showTimeWithMovieTheaterDetailsDTO;
     }
 
-    public List<ShowTimeWithMovieTheaterDetailsDTO> getShowTimesWithMoviesAndTheaterDetailsByMovieId(String movieId) throws Exception {
+    public List<ShowTimesWithTheaterDetailsDTO> getShowTimesWithMoviesAndTheaterDetailsByMovieId(String movieId) throws Exception {
         List<ShowTime> ShowTimes = this.repository.findAll();
-        List<ShowTimeWithMovieTheaterDetailsDTO> showTimeWithMovieDetails = new ArrayList<>();
+        List<ShowTimesWithTheaterDetailsDTO> showTimesWithTheaterDetailsList = new ArrayList<>();
         if(ShowTimes.size() > 0){
             for(ShowTime value : ShowTimes){
                 if(value.getMovie_id().equals(movieId)){
-                    ShowTimeWithMovieTheaterDetailsDTO showTimeWithMovieTheaterDetailsDTO = new ShowTimeWithMovieTheaterDetailsDTO();
-                    showTimeWithMovieTheaterDetailsDTO.setShowTime(value);
-                    showTimeWithMovieTheaterDetailsDTO.setTheater(this.theaterService.getTheater(value.getTheater_id()));
-                    showTimeWithMovieTheaterDetailsDTO.setMovie(null);
-                    showTimeWithMovieDetails.add(showTimeWithMovieTheaterDetailsDTO);
+
+                    ShowTimesWithTheaterDetailsDTO showTimeWithTheaterDetailsDTO = new ShowTimesWithTheaterDetailsDTO();
+                    showTimeWithTheaterDetailsDTO.setShowTimes(this.getAllShowTimes(value.getTheater_id()));
+                    showTimeWithTheaterDetailsDTO.setTheater(this.theaterService.getTheater(value.getTheater_id()));
+                    showTimesWithTheaterDetailsList.add(showTimeWithTheaterDetailsDTO);
+
+
                 }
 
             }
+
+
         }
         
 
-        return showTimeWithMovieDetails;
+        return showTimesWithTheaterDetailsList;
+    }
+
+    public List<ShowTime> getAllShowTimes(String theaterId){
+        List<ShowTime> showTimes = this.repository.findAll();
+        List<ShowTime> selectedShowTimes = new ArrayList<>();
+        for(ShowTime value : showTimes){
+            if(value.getTheater_id().equals(theaterId)){
+                selectedShowTimes.add(value);
+            }
+        }
+        return selectedShowTimes;
     }
 }
