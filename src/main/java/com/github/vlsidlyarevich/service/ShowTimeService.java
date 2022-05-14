@@ -96,4 +96,23 @@ public class ShowTimeService {
         return showTimeWithMovieTheaterDetailsDTO;
     }
 
+    public List<ShowTimeWithMovieTheaterDetailsDTO> getShowTimesWithMoviesAndTheaterDetailsByMovieId(String movieId) throws Exception {
+        List<ShowTime> ShowTimes = this.repository.findAll();
+        List<ShowTimeWithMovieTheaterDetailsDTO> showTimeWithMovieDetails = new ArrayList<>();
+        if(ShowTimes.size() > 0){
+            for(ShowTime value : ShowTimes){
+                if(value.getMovie_id().equals(movieId)){
+                    ShowTimeWithMovieTheaterDetailsDTO showTimeWithMovieTheaterDetailsDTO = new ShowTimeWithMovieTheaterDetailsDTO();
+                    showTimeWithMovieTheaterDetailsDTO.setShowTime(value);
+                    showTimeWithMovieTheaterDetailsDTO.setTheater(this.theaterService.getTheater(value.getTheater_id()));
+                    showTimeWithMovieTheaterDetailsDTO.setMovie(null);
+                    showTimeWithMovieDetails.add(showTimeWithMovieTheaterDetailsDTO);
+                }
+
+            }
+        }
+        
+
+        return showTimeWithMovieDetails;
+    }
 }
